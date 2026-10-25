@@ -39,23 +39,23 @@ Content-Type: application/json
 
 # api call for listing assessments
 ###
-GET http://127.0.0.1:8000/exams/assessments/
+GET http://127.0.0.1:8000/exams/all/
 Accept: application/json
 Authorization: Token YOUR_TOKEN_HERE
 
 # api call for creating assessments
 ###
-POST http://127.0.0.1:8000/exams/assessments/
+POST http://127.0.0.1:8000/exams/add/
 Content-Type: application/json
 Authorization: Token YOUR_TOKEN_HERE
 
 {
     "title": "Database Management Assessment",
-    "batch": "Database Batch A",
+    "batch": "Database Batch B",
     "language": "python",
-    "exam_date": "2026-10-30",
+    "exam_date": "2026-10-31",
     "duration": 2,
-    "start_time": "14:00:00",
+    "start_time": "12:00:00",
     "status": "published"
 }
 

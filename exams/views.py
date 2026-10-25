@@ -3,14 +3,14 @@ from django.shortcuts import render,get_object_or_404
 from rest_framework import authentication,permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import RetrieveAPIView,DestroyAPIView,UpdateAPIView
 
 from exams.models import Assessment
 from exams.serializers import AssessmentSerializer
-from exams.permissions import IsAdmin
 
 from datetime import timedelta,datetime
 
-class AssessmentCreateListView(APIView):
+class AssessmentListView(APIView):
 
     authentication_classes = [authentication.TokenAuthentication]
 
@@ -24,6 +24,12 @@ class AssessmentCreateListView(APIView):
 
         return Response(data=serializer.data)
 
+class AssessmentCreateView(APIView):
+
+    authentication_classes = [authentication.TokenAuthentication]
+    
+    permission_classes = [permissions.IsAdminUser]
+
     def post(self,request):
 
         form_data = request.data
@@ -32,78 +38,87 @@ class AssessmentCreateListView(APIView):
 
         if serializer.is_valid():
 
-            cleaned_data = serializer.validated_data
+            # cleaned_data = serializer.validated_data
 
-            examdate = cleaned_data.get("exam_date")
+            # examdate = cleaned_data.get("exam_date")
 
-            starttime = cleaned_data.get("start_time")
+            # starttime = cleaned_data.get("start_time")
 
-            duration = cleaned_data.get("duration")
+            # duration = cleaned_data.get("duration")
 
-            enddatetime = datetime.combine(examdate,starttime) + timedelta(hours = duration)
+            # enddatetime = datetime.combine(examdate,starttime) + timedelta(hours = duration)
 
-            cleaned_data["end_time"] = enddatetime.time()
+            # cleaned_data["end_time"] = enddatetime.time()
 
-            instance = Assessment.objects.create(created_by=request.user,** cleaned_data)
+            # instance = Assessment.objects.create(created_by=request.user,** cleaned_data)
 
-            serial_inst = AssessmentSerializer(instance)
+            # serial_inst = AssessmentSerializer(instance)
 
-            return Response(data= serial_inst.data)
+            serializer.save(created_by= request.user)
+
+            return Response(data= serializer.data)
 
         else: return Response(data=serializer.errors)
 
-class AssessmentRetrieveUpdateDelete(APIView):
+class AssessmentRetrieveUpdateDelete(RetrieveAPIView,UpdateAPIView,DestroyAPIView):
 
     authentication_classes = [authentication.TokenAuthentication]
     
-    permission_classes = [IsAdmin]
+    permission_classes = [permissions.IsAdminUser]
 
-    def get(self,request,pk=None):
+    serializer_class = AssessmentSerializer
 
-        instance = get_object_or_404(Assessment,id=pk)
+    queryset = Assessment.objects.all()
 
-        self.check_object_permissions(request,instance)
+    # def get(self,request,pk=None):
 
-        serializer = AssessmentSerializer(instance)
+    #     instance = get_object_or_404(Assessment,id=pk)
 
-        return Response(data=serializer.data)
+    #     self.check_object_permissions(request,instance)
 
-    def put(self, request, pk=None):
+    #     serializer = AssessmentSerializer(instance)
 
-        instance = get_object_or_404(Assessment, id=pk)
+    #     return Response(data=serializer.data)
 
-        self.check_object_permissions(request,instance)
+    # def put(self, request, pk=None):
 
-        form_data = request.data
+    #     instance = get_object_or_404(Assessment, id=pk)
 
-        serializer = AssessmentSerializer(data=form_data, instance=instance)
+    #     self.check_object_permissions(request,instance)
 
-        if serializer.is_valid():
+    #     form_data = request.data
 
-            cleaned_data = serializer.validated_data
+    #     serializer = AssessmentSerializer(data=form_data, instance=instance)
 
-            examdate = cleaned_data.get("exam_date")
-            starttime = cleaned_data.get("start_time")
-            duration = cleaned_data.get("duration")
+    #     if serializer.is_valid():
 
-            enddatetime = datetime.combine(examdate, starttime) + timedelta(hours=duration)
 
-            instance = serializer.save(end_time=enddatetime.time())
+    #         cleaned_data = serializer.validated_data
 
-            serial_inst = AssessmentSerializer(instance)
+    #         examdate = cleaned_data.get("exam_date")
+    #         starttime = cleaned_data.get("start_time")
+    #         duration = cleaned_data.get("duration")
 
-            return Response(data=serial_inst.data)
+    #         enddatetime = datetime.combine(examdate, starttime) + timedelta(hours=duration)
 
-        else:
-            return Response(data=serializer.errors)
+    #         instance = serializer.save(end_time=enddatetime.time())
+
+    #         serial_inst = AssessmentSerializer(instance)
+
+    #         serializer.save(created_by=request.user)
+
+    #         return Response(data=serializer.data)
+
+    #     else:
+    #         return Response(data=serializer.errors)
 
     
-    def delete(self,request,pk=None):
+    # def delete(self,request,pk=None):
 
-        instance = get_object_or_404(Assessment, id=pk)
+    #     instance = get_object_or_404(Assessment, id=pk)
         
-        self.check_object_permissions(request,instance)
+    #     self.check_object_permissions(request,instance)
 
-        instance.delete()
+    #     instance.delete()
 
-        return Response({"message":"Assessment deleted successfully.."})
+    #     return Response({"message":"Assessment deleted successfully.."})
