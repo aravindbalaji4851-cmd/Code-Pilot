@@ -6,10 +6,10 @@ POST http://127.0.0.1:8000/accounts/admin/register/
 Content-Type: application/json
 
 {
-    "username":"admin1",
-    "email":"admin1@gmail.com",
-    "password":"admin1@123",
-    "phone":"1234567891"
+    "username":"student001",
+    "email":"student001@gmail.com",
+    "password":"student01@123",
+    "phone":"1134121891"
 }
 
 # api call for creating student user
@@ -18,10 +18,10 @@ POST http://127.0.0.1:8000/accounts/student/register/
 Content-Type: application/json
 
 {
-    "username":"student1",
+    "username":"student10",
     "email": "student1@gmail.com",
-    "password":"student1@123",
-    "phone":"1234567810"
+    "password":"student10@123",
+    "phone":"12345678100"
 }
 
 # api call for token generation 
@@ -30,8 +30,8 @@ POST http://127.0.0.1:8000/accounts/token/
 Content-Type: application/json
 
 {
-    "username":"admin1",
-    "password":"admin1@123"
+    "username":"student10",
+    "password":"student10@123"
 }
 
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8000/exams/all/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
 
 # api call for creating assessments
 ###
@@ -61,9 +61,9 @@ Authorization: Token YOUR_TOKEN_HERE
 
 # api call for retrieveing specific assessments 
 ###
-GET http://127.0.0.1:8000/exams/assessments/4/
+GET http://127.0.0.1:8000/exams/assessments/1/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
 
 # api call for updating assessments
 ###
@@ -86,3 +86,71 @@ Authorization: Token YOUR_TOKEN_HERE
 DELETE http://127.0.0.1:8000/exams/assessments/7/
 Accept: application/json
 Authorization: Token YOUR_TOKEN_HERE
+
+
+# QUESTION ENDPOINTS ===========================
+
+# api call for creating question
+###
+POST http://127.0.0.1:8000/problem/assessment/1/question/
+Content-Type: application/json
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+
+{
+    "title":"write a program to find prime",
+    "description":"write a program to find prime as function",
+    "score":10,
+    "sample_input":"num=5",
+    "sample_output":"True"
+
+}
+
+# api call for retrieving  question
+###
+GET http://127.0.0.1:8000/problem/question/2/
+Accept: application/json
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+
+# api call for updating question
+###
+PUT http://127.0.0.1:8000/problem/question/1/
+Content-Type: application/json
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+
+{
+  "title": "write a program to add two numberes",
+  "description": "write a program to add two numberes without using sum function",
+  "score": 5,
+  "sample_input": "num1=15, num2=15",
+  "sample_output": "result=30"
+}
+
+# api call for deleting question
+###
+DELETE http://127.0.0.1:8000/problem/question/2/
+Accept: application/json
+Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+
+
+
+# SUBMISSION ENDPOINTS ======================
+
+# api call for submission 
+###
+POST http://127.0.0.1:8000/evaluation/assessment/1/submission/
+Content-Type: application/json
+Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
+
+
+# QUESTION ENDPOINTS =============================
+
+# api call for submitting answer to a submission
+###
+POST http://127.0.0.1:8000/evaluation/submission/1/answer/
+Content-Type: application/json
+Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
+
+{
+    "question":3,
+    "answer_text":"print(factorial(num))"
+}

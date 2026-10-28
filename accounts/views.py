@@ -39,7 +39,7 @@ class StudentCreateView(APIView):
 
             cleaned_data = serializer.validated_data
 
-            instance = User.objects.create_user(** cleaned_data)
+            instance = User.objects.create_user(** cleaned_data,role="student")
 
             serializer_inst = UserSerializer(instance)
 

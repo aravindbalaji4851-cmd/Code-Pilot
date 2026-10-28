@@ -1,0 +1,55 @@
+from django.shortcuts import render,get_object_or_404
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication
+
+from evaluation.models import Submission
+from evaluation.serializers import SubmissionSerializer,AnswerSerializer
+from evaluation.permissions import IsStudentUser
+
+from exams.models import Assessment
+
+class SubmissionStartView(APIView):
+
+    authentication_classes = [authentication.TokenAuthentication]
+
+    permission_classes = [IsStudentUser]
+
+    def post(self,request,pk=None):
+
+        assessment_id = pk
+
+        assessment_obj = get_object_or_404(Assessment,id=assessment_id)
+
+        instance = Submission.objects.create(student=request.user,assessment=assessment_obj)
+
+        serializer = SubmissionSerializer(instance)
+
+        return Response(serializer.data)
+
+class AnswerCreateView(APIView):
+
+    authentication_classes = [authentication.TokenAuthentication]
+
+    permission_classes = [IsStudentUser]
+
+    def post(self,request,pk=None):
+
+        submission_id = pk
+
+        submission_obj = get_object_or_404(Submission,id=pk)
+
+        form_data = request.data
+
+        serializer = AnswerSerializer(data=form_data)
+
+        if serializer.is_valid():
+
+            serializer.save(submission=submission_obj)
+
+            return Response(data=serializer.data)
+
+        else: return Response(data=serializer.errors)
+
+        
