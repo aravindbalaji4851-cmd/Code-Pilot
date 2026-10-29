@@ -38,7 +38,7 @@ class Assessment(models.Model):
     status = models.CharField(max_length=20,choices=STATUS_CHOICES,default="draft")
 
     def __str__(self):
-        return f"{self.title} : {self.exam_date}"
+        return self.title
 
 
     def save(self,*args,**kwargs):

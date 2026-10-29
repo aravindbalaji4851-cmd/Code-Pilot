@@ -30,8 +30,8 @@ POST http://127.0.0.1:8000/accounts/token/
 Content-Type: application/json
 
 {
-    "username":"student10",
-    "password":"student10@123"
+    "username":"admin",
+    "password":"admin@123"
 }
 
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8000/exams/all/
 Accept: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 # api call for creating assessments
 ###
@@ -63,7 +63,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 GET http://127.0.0.1:8000/exams/assessments/1/
 Accept: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 # api call for updating assessments
 ###
@@ -94,7 +94,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 POST http://127.0.0.1:8000/problem/assessment/1/question/
 Content-Type: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 {
     "title":"write a program to find prime",
@@ -109,13 +109,13 @@ Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
 ###
 GET http://127.0.0.1:8000/problem/question/2/
 Accept: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 # api call for updating question
 ###
 PUT http://127.0.0.1:8000/problem/question/1/
 Content-Type: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 {
   "title": "write a program to add two numberes",
@@ -129,7 +129,7 @@ Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
 ###
 DELETE http://127.0.0.1:8000/problem/question/2/
 Accept: application/json
-Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
+Authorization: Token YOUR_TOKEN_HERE
 
 
 
@@ -139,7 +139,13 @@ Authorization: Token d2652d263a4f12d1970b46188288b05d7272c7d2
 ###
 POST http://127.0.0.1:8000/evaluation/assessment/1/submission/
 Content-Type: application/json
-Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
+Authorization: Token YOUR_TOKEN_HERE
+
+# api call for retreving api call
+###
+GET  http://127.0.0.1:8000/evaluation/submission/1/
+Accept: application/json
+Authorization: Token YOUR_TOKEN_HERE
 
 
 # QUESTION ENDPOINTS =============================
@@ -148,9 +154,21 @@ Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
 ###
 POST http://127.0.0.1:8000/evaluation/submission/1/answer/
 Content-Type: application/json
-Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
+Authorization: Token YOUR_TOKEN_HERE
 
 {
-    "question":3,
+    "question":4,
     "answer_text":"print(factorial(num))"
+}
+
+
+# evaluate answer
+###
+PUT http://127.0.0.1:8000/evaluation/answer/1/
+Content-Type: application/json
+Authorization: Token YOUR_TOKEN_HERE
+
+{
+    "marks_awarded":4,
+    "feed_back":"poor"
 }

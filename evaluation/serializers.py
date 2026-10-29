@@ -2,7 +2,15 @@ from rest_framework import serializers
 
 from evaluation.models import Submission,Answer
 
+from problem.models import Question
+
 class SubmissionSerializer(serializers.ModelSerializer):
+
+    assessment = serializers.StringRelatedField(read_only = True)
+    
+    student = serializers.StringRelatedField(read_only = True)
+
+    answers = serializers.SerializerMethodField()
 
     class Meta:
 
@@ -12,16 +20,13 @@ class SubmissionSerializer(serializers.ModelSerializer):
 
         read_only_fields = [fields]
 
-        # def get_fields(self):
+    def get_answers(self,obj):
 
-        #     fields = super().get_fields()
+        answer_obj = Answer.objects.filter(submission=obj)
 
-        #     for field in fields.values():
+        serializer = AnswerSerializer(answer_obj,many=True)
 
-        #         field.read_only=True
-
-        #     return fields
-
+        return serializer.data
 
 class AnswerSerializer(serializers.ModelSerializer):
 
@@ -34,5 +39,3 @@ class AnswerSerializer(serializers.ModelSerializer):
         read_only_fields = ["id","submission","marks_awarded","feedback","evaluated_at"]
 
 
-    def validate(self, attrs):
-        return 
