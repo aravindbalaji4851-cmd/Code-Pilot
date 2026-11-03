@@ -30,6 +30,8 @@ class SubmissionSerializer(serializers.ModelSerializer):
 
 class AnswerSerializer(serializers.ModelSerializer):
 
+    question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
+    
     class Meta:
 
         model = Answer
@@ -37,5 +39,4 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
         read_only_fields = ["id","submission","marks_awarded","feedback","evaluated_at"]
-
 

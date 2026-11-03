@@ -4,8 +4,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication,permissions
 from rest_framework import serializers
+from rest_framework.generics import UpdateAPIView
 
-from evaluation.models import Submission
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from evaluation.models import Submission,Answer
 from evaluation.serializers import SubmissionSerializer,AnswerSerializer
 from evaluation.permissions import IsStudentUser
 
@@ -15,9 +18,9 @@ from problem.models import Question
 
 class SubmissionStartView(APIView):
 
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
 
-    permission_classes = [IsStudentUser]
+    permission_classes = [permissions.IsAuthenticated,IsStudentUser]
 
     def post(self,request,pk=None):
 
@@ -83,4 +86,39 @@ class AnswerCreateView(APIView):
 
         else: return Response(data=serializer.errors)
 
-        
+
+class AnswerUpdateView(UpdateAPIView):
+
+    authentication_classes = [authentication.TokenAuthentication]
+
+    permission_classes = [permissions.IsAdminUser]
+
+    # serializer_class = AnswerSerializer
+
+    # queryset = Answer.objects.all()
+
+    def patch(self,request,pk=None):
+
+        answer_id = pk
+
+        answer_obj = get_object_or_404(Answer,id=answer_id)
+
+        form_data = request.data
+
+        serializer = AnswerSerializer(data=form_data,instance=answer_obj,partial=True)
+
+        serializer.fields["marks_awarded"].read_only = False
+        serializer.fields["feedback"].read_only = False
+ 
+
+        if serializer.is_valid():
+
+            serializer.save()
+
+            return Response(serializer.data)
+
+            # Answer.objects.filter(id=answer_id).update(** form_data)
+
+            # return Response({"message":"answer evaluated...."})
+
+        else:return Response(data=serializer.errors)

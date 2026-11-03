@@ -18,11 +18,31 @@ POST http://127.0.0.1:8000/accounts/student/register/
 Content-Type: application/json
 
 {
-    "username":"student10",
-    "email": "student1@gmail.com",
-    "password":"student10@123",
-    "phone":"12345678100"
+    "username":"student002",
+    "email": "student001@gmail.com",
+    "password":"student001@123",
+    "phone":"12345678111"
 }
+
+# api call for profile completion
+###
+PUT http://127.0.0.1:8000/accounts/profile/complete/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkzNjg3OTg2LCJpYXQiOjE3OTM2ODc2ODYsImp0aSI6IjM0YmQzZmQ1MWRiMjRkMzZhNThkZmRhOGFmODQwNGZjIiwidXNlcl9pZCI6IjEwIn0.uLwlj9R0qgBHt9Sjd7wB9bzxe372rYH8p5YJagRRec8
+
+{
+    "skills":"python,django,drf,html,css",
+    "passout_year":"2026",
+    "qualification":"btech cse",
+    "github_url":"http://student002.com",
+    "linked_url":"http://student002.com"
+}
+
+# api call for profile retrieve
+###
+GET http://127.0.0.1:8000/accounts/profile/me/
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkzNjg4NzU0LCJpYXQiOjE3OTM2ODg0NTQsImp0aSI6IjAwMTIwNTc1MjY1OTQ5NGY4MDk3OWVkZjQxMGY5MDcxIiwidXNlcl9pZCI6IjMifQ.Hq_Vda9gkDurIqSp6OozupaWXJNd8qQAQsuD5shHRcs
 
 # api call for token generation 
 ###
@@ -30,8 +50,29 @@ POST http://127.0.0.1:8000/accounts/token/
 Content-Type: application/json
 
 {
-    "username":"admin",
-    "password":"admin@123"
+    "username":"student001",
+    "password":"student001@123"
+}
+
+# JWT ==================================================
+
+# api call for jwt token pair
+###
+POST http://127.0.0.1:8000/accounts/jwt/token/
+Content-Type: application/json
+
+{
+    "username":"student1",
+    "password":"student1@123"
+}
+
+# api call for jwt token refresh
+###
+POST http://127.0.0.1:8000/accounts/jwt/token/refresh/
+Content-Type: application/json
+
+{
+   "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5MzY4ODIxMiwiaWF0IjoxNzkzNjAxODEyLCJqdGkiOiJjOGY0YzBhMTljYjU0OWI2OTFiMjI0YWRhMTllYTkxOCIsInVzZXJfaWQiOiI5In0.HV3NwW5xDmlev08BHKcwgXzCxuzdgBN3ed3AClSKpxM" 
 }
 
 
@@ -41,13 +82,13 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8000/exams/all/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
 
 # api call for creating assessments
 ###
 POST http://127.0.0.1:8000/exams/add/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 {
     "title": "Database Management Assessment",
@@ -63,13 +104,13 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 GET http://127.0.0.1:8000/exams/assessments/1/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 # api call for updating assessments
 ###
 PUT http://127.0.0.1:8000/exams/assessments/1/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 {
     "title": "Python Programming Assessment",
@@ -85,7 +126,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 DELETE http://127.0.0.1:8000/exams/assessments/7/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 
 # QUESTION ENDPOINTS ===========================
@@ -94,7 +135,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 POST http://127.0.0.1:8000/problem/assessment/1/question/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 {
     "title":"write a program to find prime",
@@ -109,13 +150,13 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 GET http://127.0.0.1:8000/problem/question/2/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 # api call for updating question
 ###
 PUT http://127.0.0.1:8000/problem/question/1/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 {
   "title": "write a program to add two numberes",
@@ -129,7 +170,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 DELETE http://127.0.0.1:8000/problem/question/2/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 
 
@@ -137,15 +178,16 @@ Authorization: Token YOUR_TOKEN_HERE
 
 # api call for submission 
 ###
-POST http://127.0.0.1:8000/evaluation/assessment/1/submission/
+POST http://127.0.0.1:8000/evaluation/assessment/3/submission/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkzNjAyNjQzLCJpYXQiOjE3OTM2MDIzNDMsImp0aSI6IjJkMGIzNTU1NjZlMzRlYWE5MTY0Y2EyZjhlODI5YzNlIiwidXNlcl9pZCI6IjkifQ.leSazJUctfYrpy4GyHNN_-djdDOP5PaBfEEulEBGjZA
 
-# api call for retreving api call
+
+# api call for retreving 
 ###
 GET  http://127.0.0.1:8000/evaluation/submission/1/
 Accept: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 
 # QUESTION ENDPOINTS =============================
@@ -154,7 +196,7 @@ Authorization: Token YOUR_TOKEN_HERE
 ###
 POST http://127.0.0.1:8000/evaluation/submission/1/answer/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 99c35ef6d4f605071d6f3c24a57075db3d17fcde
 
 {
     "question":4,
@@ -164,11 +206,11 @@ Authorization: Token YOUR_TOKEN_HERE
 
 # evaluate answer
 ###
-PUT http://127.0.0.1:8000/evaluation/answer/1/
+PATCH http://127.0.0.1:8000/evaluation/answer/1/
 Content-Type: application/json
-Authorization: Token YOUR_TOKEN_HERE
+Authorization: Token 8c250abaae7fc70388d90ad7e885d4e468af15b8
 
 {
-    "marks_awarded":4,
-    "feed_back":"poor"
+    "marks_awarded":0,
+    "feedback":"poor"
 }
