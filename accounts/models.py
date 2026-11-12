@@ -50,8 +50,8 @@ def send_invitation_mail(sender,instance,created,*args,**kwargs):
         send_mail(
                     "Student Profile Creation Confirmation",
                     "Your profile created successfully in codepilot",
-                    "aravindbalaji4851@gmail.com",
-                    ["aravindbalajikj@gmail.com"],
+                    "ADMIN_EMAIL",
+                    ["STUDENT_EMAIL"],
                 )
 
 post_save.connect(send_invitation_mail,sender=User)
