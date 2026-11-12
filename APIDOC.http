@@ -6,9 +6,9 @@ POST http://127.0.0.1:8000/accounts/admin/register/
 Content-Type: application/json
 
 {
-    "username":"student001",
-    "email":"student001@gmail.com",
-    "password":"student01@123",
+    "username":"admin1",
+    "email":"admin1@gmail.com",
+    "password":"admin1@123",
     "phone":"1134121891"
 }
 
@@ -18,10 +18,10 @@ POST http://127.0.0.1:8000/accounts/student/register/
 Content-Type: application/json
 
 {
-    "username":"student002",
-    "email": "student001@gmail.com",
-    "password":"student001@123",
-    "phone":"12345678111"
+    "username":"aravind11",
+    "email": "aravd11@gmail.com",
+    "password":"ara11@123",
+    "phone":"12335674314"
 }
 
 # api call for profile completion
@@ -62,8 +62,8 @@ POST http://127.0.0.1:8000/accounts/jwt/token/
 Content-Type: application/json
 
 {
-    "username":"student1",
-    "password":"student1@123"
+    "username":"12345678114",
+    "password":"student03@123"
 }
 
 # api call for jwt token refresh

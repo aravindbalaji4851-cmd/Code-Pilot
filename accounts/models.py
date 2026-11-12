@@ -41,3 +41,17 @@ def create_student_profile(sender,instance,created,*args,**kwargs):
 post_save.connect(create_student_profile,sender=User)
 
 
+from django.core.mail import send_mail
+
+def send_invitation_mail(sender,instance,created,*args,**kwargs):
+
+    if created and instance.role == "student":
+
+        send_mail(
+                    "Student Profile Creation Confirmation",
+                    "Your profile created successfully in codepilot",
+                    "aravindbalaji4851@gmail.com",
+                    ["aravindbalajikj@gmail.com"],
+                )
+
+post_save.connect(send_invitation_mail,sender=User)
